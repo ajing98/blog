@@ -1,0 +1,58 @@
+ <%- include header %>
+ <%- include alert  %>
+ <!-- 主体部分 -->
+ <section class="container">
+     <h3>博客统计</h3>
+     <h4>目前有 <%=len %> 篇文章, 并有 <%=count %> 条关于你的评论在 <%=categoryCount %> 个分类中. </h4>
+     <h4 class="text-warning">点击下面的链接快速开始:</h4>
+     <br />
+     <h4><a href="/admin/edit" class="text-primary">撰写新文章</a></h4>
+     <br />
+     <div class="row recent-article">
+         <div class="col-lg-6">
+             <h4 style="margin-left: 15px">最近文章</h4>
+             <ul>
+                 <% if(data.length == 0){ %>
+                 <li>
+                     <p class="text-warning">
+                         当前还没有撰写文章，快去撰写你的第一篇文章吧！
+                     </p>
+                 </li>
+                 <% 
+                    }else{
+                        for(let i = 0;i < data.length;i++){
+                %>
+                 <li>
+                     <%= data[i].time.d %> &nbsp;
+                     <small><%= `${data[i].time.month}-${data[i].time.day}` %></small>
+                     &nbsp;
+                     <a href="#">
+                         <%= data[i].title %>
+                     </a>
+                 </li>
+                 <% }} %>
+             </ul>
+         </div>
+
+         <!-- 未实现 -->
+         <!-- <div class="col-lg-6">
+             <h4 style="margin-left: 15px">最近评论</h4>
+             <ul>
+                 <li>
+                     7.11 &nbsp;
+                     <a href="#">
+                         此次：你好呀
+                     </a>
+                 </li>
+                 <li>
+                     7.11 &nbsp;
+                     <a href="#">
+                         cc：Hello
+                     </a>
+                 </li>
+             </ul>
+         </div> -->
+     </div>
+ </section>
+
+ <%- include footer %>

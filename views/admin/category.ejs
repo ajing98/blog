@@ -1,0 +1,85 @@
+<%- include header %>
+<%- include alert %>
+<script>$(function () { $("[data-toggle='tooltip']").tooltip(); });</script>
+<section class="container-section">
+    <h3>管理分类
+        <small>
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCategory">
+                新增分类
+            </button>
+        </small>
+    </h3>
+    <div class="modal fade" data-backdrop="static" id="newCategory" tabindex="-1" role="dialog"
+        aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalTitle">新增分类</h4>
+                </div>
+                <form action="/admin/category/add" method="POST" role="form">
+                    <div class="modal-body">
+                        </body>
+
+                        </html>
+                        <div class="form-group">
+                            <label for="category_name">分类名</label>
+                            <input type="text" name="category_name" id="category_name" required class="form-control"
+                                placeholder="分类名，长度为12，用于前台显示" maxlength="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="category_alias">分类别名</label>
+                            <input type="text" name="category_alias" id="category_alias" required class="form-control"
+                                placeholder="分类别名，长度为30，用于后台显示" maxlength="30">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">新增分类</button>
+                            <button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-section-sm">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>分类名</th>
+                    <th>分类别名</th>
+                    <th>文章数</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td>默认</td>
+                    <td>这是默认的分类</td>
+                    <td>待实现</td>
+                    <td>
+                        <a href="javascript:false" data-placement="top" data-toggle="tooltip" title="这是默认的分类不可修改"
+                            class="btn btn-warning btn-xs margin-5 ">修改</a>
+                        <a href="javascript:false" data-placement="top" data-toggle="tooltip" title="不可以删除，放过我吧，我是默认的分类"
+                            class="btn btn-danger btn-xs margin-5 ">删除</a>
+                    </td>
+                </tr> -->
+                <% for(let i = 0;i < category.length;i++){ %>
+                <tr>
+                    <td><%=category[i].category_name %></td>
+                    <td><%=category[i].category_alias %></td>
+                    <td>待实现</td>
+                    <td>
+                        <a href="#" class="btn btn-warning btn-xs margin-5">修改</a>
+                        <a href="/admin/category/del?category_name=<%=category[i].category_name %>"
+                            class="btn btn-danger btn-xs margin-5">删除</a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<%- include footer %>

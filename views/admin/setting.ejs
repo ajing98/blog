@@ -1,0 +1,42 @@
+<%- include header  %>
+
+<!-- 基本设置 -->
+<section class="container-section">
+    <h3>基本设置</h3>
+    <div class="container-section-sm">
+        <form action="/admin/setting/save" method="POST" role="form">
+            <div class="form-group">
+                <label for="blog-name">博客名称</label>
+                <input type="text" required name="blog_name" id="blog_name" class="form-control" 
+                    placeholder="长度小于12" maxlength="12" value="<%= basic.blog_name %>">
+            </div>
+            <h4>个人资料设置<small>(在前台关于显示)</small></h4>
+            <div class="form-group">
+                <label for="blog_account_img">头像</label>
+                <input type="url"  name="blog_account_img"
+                    placeholder="仅支持url地址，如https：//img.jpg" id="blog_account_img" 
+                    class="form-control" value="<%= basic.blog_account_img %>">
+            </div>
+            <div class="form-group">
+                <label for="blog_account_name">昵称</label>
+                <input type="text" required name="blog_account_name" id="blog_account_name" class="form-control"
+                    value="<%= basic.blog_account_name %>">
+            </div>
+            <div class="form-group">
+                <label for="blog_account_email">电子邮箱</label>
+                <input type="email" required name="blog_account_email" id="blog_account_email" class="form-control"
+                    value="<%= basic.blog_account_email %>">
+            </div>
+            <div class="form-group">
+                <label for="blog_account_introduction">个人介绍</label>
+                <textarea name="blog_account_introduction" required id="blog_account_introduction" 
+                    class="form-control"><%= basic.blog_account_introduction %></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">保存设置</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<%- include footer  %>

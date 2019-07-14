@@ -1,0 +1,164 @@
+<%- include header %>
+<%- include alert %>
+<script>
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea[name="article_content"]', {
+            width: '100%',
+            resizeType: 1,
+            allowPreviewEmoticons: false,
+            allowImageUpload: false,
+            items: [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic',
+                'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+            ]
+        });
+    });
+</script>
+<section class="container-section">
+    <h3>文章管理
+        <small>
+            <a href="/admin/edit" class="btn btn-primary btn-xs">
+                撰写新文章
+            </a>
+        </small>
+    </h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>分类</th>
+                <th>评论数</th>
+                <th>作者</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(data.length == 0){ %>
+            <tr>
+                <td colspan="6">当前无数据，快去撰写你的第一篇文章吧</td>
+            </tr>
+            <% }else{
+                    for(let i = 0;i < data.length;i++){
+                %>
+            <tr>
+                <td><%=data[i].title %></td>
+                <td><%=data[i].category %></td>
+                <td>&nbsp; <%=data[i].message.length %></td>
+                <td><%=data[i].time.date %></td>
+                <td><%=data[i].title %></td>
+                <td>
+                    <button value="<%= data[i]._id%>" class="btn btn-warning btn-xs margin-5">修改</button>
+                    <button value="<%= data[i]._id%>" class="btn btn-danger btn-xs margin-5">删除</button>
+                </td>
+            </tr>
+            <% }} %>
+        </tbody>
+    </table>
+    <!-- 分页按钮 -->
+    <div class="text-center">
+        <ul class="pagination pagination-sm">
+            <li>
+                <a href="/admin/manager?page=1">首页</a>
+            </li>
+            <li class="<%= page==1? 'disabled':'' %>">
+                <a href="<%= page==1? 'javascript:false' : `/admin/manager?page=${page-1}` %>">&laquo;</a>
+            </li>
+            <% for(let i = 1;i <= sum;i++){ %>
+            <li class="<%= page==i ? 'active':'' %>">
+                <a href="/admin/manager?page=<%=i %>"><%= i %></a>
+            </li>
+            <% } %>
+            <li class="<%= page==sum? 'disabled':'' %>">
+                <a href="<%= page==sum? 'javascript:false' : `/admin/manager?page=${page+1}` %>">&raquo;</a>
+            </li>
+            <li>
+                <a href="/admin/manager?page=<%=sum %>">末页</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="update" aria-labelledby="updateTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">更新数据</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/post/update" method="POST" role="form">
+                        <div class="form-group">
+                            <input type="text" name="_id" id="_id" value="" class="hidden">
+                        </div>
+                        <div class="form-group">
+                            <label for="article_title">标题</label>
+                            <input type="text" required name="article_title" id="article_title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="article_content">内容</label>
+                            <textarea name="article_content" required id="article_content" class="form-control">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="radio" id="cgRadio">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="article_tag">标签<small>（多个使用;隔开）</small></label>
+                            <input type="text" name="article_tag" class="form-control" id="article_tag">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">提交更新</button>
+                            <button class="btn btn-default" data-dismiss="modal" type="button">关闭</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('button.btn-warning').click(function () {
+            let id = $(this).val();
+            $.getJSON('/admin/api/article/one',{
+                _id:id
+            },(data)=>{
+                console.log(data.category);
+                $('#_id').attr('value',id);                
+                $('#article_title').attr('value',data.data.title);
+                KindEditor.html('#article_content',data.data.content);
+                $('#article_tag').attr('value',data.data.tags.toString().replace(/,/,';'));
+                for(let i = 0;i < data.category.length;i++){
+                    if(data.category[i].category_name == data.data.category){
+                        $('#cgRadio').append(`
+                        <label for="category">
+                            <input type="radio" checked name="article_category" value="${data.category[i].category_name}">${data.category[i].category_name}
+                        </label>`);
+                    }else{
+                        $('#cgRadio').append(`
+                        <label for="category">
+                            <input type="radio" name="article_category" value="${data.category[i].category_name}">${data.category[i].category_name}
+                        </label>`);
+                    }
+                }
+                $('#update').modal({ backdrop: 'static' });
+            });
+            
+        });
+        $('button.btn-danger').click(function () {
+            var isDel = confirm('确定要删除吗？');
+            if (!isDel) {
+                return;
+            }
+            let id = $(this).val();
+            window.location.href = `/admin/manager/del?_id=${id}`;
+        });
+    });
+</script>
+
+<%- include footer %>
