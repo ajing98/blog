@@ -2,9 +2,12 @@
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     background-color: #F7F7F7;
+    position: relative;
 }
+
 .header .navbar-default {
     background-color: #fff;
     padding: 10px 0;
@@ -15,7 +18,8 @@ body{
     color: black;
 }
 
-.container-section,.container-section-sm {
+.container-section,
+.container-section-sm {
     padding-top: 15px;
     padding-right: 15px;
     padding-left: 15px;
@@ -27,10 +31,12 @@ body{
     .container-section {
         width: 700px
     }
+
     .container-section-sm {
         width: 500px
     }
-    .input-collection{
+
+    .input-collection {
         float: left;
         width: 50%;
     }
@@ -40,22 +46,27 @@ body{
     .container-section {
         width: 900px
     }
+
     .container-section-sm {
         width: 650px
     }
-    .input-collection{
+
+    .input-collection {
         float: left;
         width: 50%;
     }
 }
+
 @media (min-width:1200px) {
     .container-section {
         width: 1000px
     }
+
     .container-section-sm {
         width: 750px
     }
-    .input-collection{
+
+    .input-collection {
         float: left;
         width: 50%;
     }
@@ -65,8 +76,8 @@ body{
     width: 100%;
     overflow: hidden;
     background-color: #fff;
-    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.04);
-            box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
     border-radius: 3px;
     position: relative;
     margin-bottom: 1.5em;
@@ -86,70 +97,107 @@ body{
     width: 100%;
     height: 100%;
 }
-.item-title{
+
+.item-title {
     padding: 0.5em 0 1.5em 1em;
     position: relative;
 }
-.left-tilt{
+
+.left-tilt {
     width: 102%;
     min-height: 100px;
     position: absolute;
     background-color: #fff;
     z-index: 0;
-    transform: rotate(7deg) translate(-10px,-19px);
+    transform: rotate(7deg) translate(-10px, -19px);
 }
-.footer{
-    margin-bottom: 0px;
-    background-color: #fff;
+
+.category-box {
+    position: relative;
+    padding: 0 20px 10px 20px;
     overflow: hidden;
 }
 
+.footer {
+    margin-top: 2em;
+    margin-bottom: 0px;
+    background-color: #fff;
+}
+
+/* 动态为footer添加类fixed-bottom */
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 /* 文章详情 */
-.article-detail{
+.article-detail {
     width: 100%;
     overflow: hidden;
     background-color: #fff;
 }
-.article-title{
+
+.article-title {
     padding-bottom: 0.2em;
 }
+
 .article-divider {
     height: 1px;
     margin: 15px 0;
     overflow: hidden;
     background-color: #e5e5e5
 }
+.article-tags{
+    padding: 1em;
+    text-align: right
+}
+.article-file {
+    padding: 0 1em 0 1em;
+}
+
 /* 留言信息列表 */
-.message-item{
+.message-item {
     background-color: #fff;
     width: 100%;
     border-radius: 3px;
     overflow: hidden;
     margin: 1em 0;
 }
-.message-item img{
+
+.message-item img {
     width: 45px;
     height: auto;
     border-radius: 50%;
     margin: 1em;
 }
-.message-content,.message-time{
-    margin: 0.5em 0 0.5em 1em;
+
+.message-content,
+.message-time,
+.message-user {
+    margin: 1em;
 }
+
+.message-time {
+    text-align: right;
+}
+
 /* 留言提交 */
-.message-post{
+.message-post {
     width: 100%;
     background-color: #fff;
 }
 
-.input-container{
-    padding:  0 10px;
+.input-container {
+    padding: 0 10px;
     position: relative;
 }
-.input-collection{
+
+.input-collection {
     margin-bottom: 1em;
 }
-.message-post-input{
+
+.message-post-input {
     width: 100%;
     border: 0;
     height: 3.5em;
@@ -157,21 +205,25 @@ body{
     border-bottom: 1px dashed rgb(89, 92, 95);
 
 }
-.message-post-input:focus{ 
-    outline:none;
+
+.message-post-input:focus {
+    outline: none;
     border-bottom: 1px dashed rgb(226, 64, 14);
 }
-.input-container textarea:focus{
+
+.input-container textarea:focus {
     outline: none;
 }
-.input-container textarea{
+
+.input-container textarea {
     width: 100%;
     min-height: 200px;
     border: 0;
     text-indent: 1em;
     resize: none;
 }
-.input-container button[type='submit']{
+
+.input-container button[type='submit'] {
     position: absolute;
     bottom: 1em;
     right: 1em;

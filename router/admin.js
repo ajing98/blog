@@ -6,8 +6,7 @@ const setting = require('../util/setting');
 const db = require('../util/db');
 const account = require('../util/account');
 const tool = require('../util/tools');
-const path = require('path');
-const fs = require('fs');
+
 //进入登录页 
 router.get('/login', (req, res) => {
     //避免重复登录
@@ -194,7 +193,7 @@ router.get('/manager', (req, res) => {
                 return;
             }
             //每6个一页，多出另算一页，求总页数
-            var sum = count % 6 == 0 ? count / 6 : parseInt(count / 6) + 1;
+            let sum = count % 6 == 0 ? count / 6 : parseInt(count / 6) + 1;
             res.render('./admin/manager', {
                 sum: sum,
                 data: data,

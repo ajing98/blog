@@ -1,87 +1,74 @@
 <%- include header %>
 
-    <!-- 内容区域 -->
-    <section class="container-section">
-            <div class="row">
-    
-                <div class="col-lg-4 col-md-6">
-                    <div class="article-list-item">
-                        <div class="item-img">
-                            <img src="../public/img/4.jpg" alt="">
-                        </div>
-                        <div class="left-tilt"></div>
-                        <div class="caption">
-                            <h4 class="item-title">
-                                title
-                            </h4>
+<!-- 内容区域 -->
+<section class="container-section">
+    <h3 class="text-center text-warning <%= data.length != 0?'hidden':'' %>">博主很懒，一篇文章都没有</h3>
+    <div class="row">
+        <% for(let i = 0;i < data.length;i++){ %>
+        <div class="col-lg-4 col-md-6">
+            <a href="/article/<%= data[i].category %>/<%= data[i]._id %>">
+                <div class="article-list-item">
+                    <div class="item-img">
+                        <img src="/img/4.jpg" alt="">
+                    </div>
+                    <div class="left-tilt"></div>
+                    <div class="caption">
+                        <h4 class="item-title">
+                            <%= data[i].title %>
+                        </h4>
+                        <div class="category-box clearfix">
+                            <a href="/article/<%= data[i].category %>" class="btn btn-success btn-xs pull-right">
+                                <%= data[i].category %>
+                            </a>
                         </div>
                     </div>
                 </div>
-    
-                <div class="col-lg-4 col-md-6">
-                    <div class="article-list-item">
-                        <div class="item-img">
-                            <img src="../public/img/4.jpg" alt="">
-                        </div>
-                        <div class="left-tilt"></div>
-                        <div class="caption">
-                            <h4 class="item-title">
-                                title
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col-lg-4 col-md-6">
-                    <div class="article-list-item">
-                        <div class="item-img">
-                            <img src="../public/img/4.jpg" alt="">
-                        </div>
-                        <div class="left-tilt"></div>
-                        <div class="caption">
-                            <h4 class="item-title">
-                                title
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="col-lg-4 col-md-6">
-                    <div class="article-list-item">
-                        <div class="item-img">
-                            <img src="../public/img/4.jpg" alt="">
-                        </div>
-                        <div class="left-tilt"></div>
-                        <div class="caption">
-                            <h4 class="item-title">
-                                title
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-    
-            </div>
-    
-            <!-- 分页按钮 -->
-            <div class="text-center">
-                <ul class="pagination pagination-sm">
-                    <li>
-                        <a href="#">首页</a>
-                    </li>
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                    <li>
-                        <a href="#">末页</a>
-                    </li>
-                </ul>
-            </div>
-        </section>
+            </a>
+        </div>
+        <% } %>
+    </div>
+    <!-- 分页按钮 -->
+    <div class="text-center <%= data.length>6?'hidden':'' %> 
+        <%= category != ''?'hidden':'' %>
+        <%= data.length == 0?'hidden':'' %>">
+        <ul class=" pagination pagination-sm">
+        <li>
+            <a href="/index?page=1">首页</a>
+        </li>
+        <li class="<%= page==1? 'disabled':'' %>">
+            <a href="<%= page==1? 'javascript:false' : `/index?page=${page-1}` %>">&laquo;</a>
+        </li>
+        <% for(let i = 1;i <= sum;i++){ %>
+        <li class="<%= page==i ? 'active':'' %>">
+            <a href="/index?page=<%=i %>"><%= i %></a>
+        </li>
+        <% } %>
+        <li class="<%= page==sum? 'disabled':'' %>">
+            <a href="<%= page==sum? 'javascript:false' : `/index?page=${page+1}` %>">&raquo;</a>
+        </li>
+        <li>
+            <a href="/index?page=<%=sum %>">末页</a>
+        </li>
+        </ul>
+    </div>
+</section>
 
 <%- include footer %>
+<script>
+    $(function () {
+        function footerPosition() {
+            $("footer").removeClass("fixed-bottom");
+            let contentHeight = document.body.scrollHeight; 
+            let = winHeight = window.innerHeight; 
+
+            if (!(contentHeight > winHeight)) {
+                //当网页正文高度小于可视窗口高度时，为footer添加类fixed-bottom
+                $("footer").addClass("fixed-bottom");
+            } else {
+                $("footer").removeClass("fixed-bottom");
+            }
+        }
+        footerPosition()
+        $(window).resize(footerPosition);
+    });
+</script>

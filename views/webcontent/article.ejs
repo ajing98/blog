@@ -1,0 +1,75 @@
+<%- include header %>
+<!-- 文章详细内容页 -->
+<section class="article-detail">
+    <div class="container-section-sm">
+        <h4 class="article-title"><%= data.title %></h4>
+        <p class="article-author-time">
+            <span class="glyphicon glyphicon-user"></span>&nbsp;<%= data.author %>&nbsp;&nbsp;
+            <small><span class="glyphicon glyphicon-time"></span>&nbsp;<%= data.time.date %></small>
+        </p>
+        <div class="article-divider"></div>
+        <div class="article-content">
+            <%- data.content %>
+        </div>
+        <div class="article-file <%=data.file.name==''?'hidden':''%>">
+                <h4 class="text-primary">附件</h4>
+                <a href="<%= data.file.url %>"><%= data.file.name %></a>
+            </div>
+        <div class="article-tags <%=data.tags.length == 0?'hidden':''%>">
+            <% for(let i = 0;i < data.tags.length;i++){ %>
+            <span class="label <%=i%2==0?'label-primary':'label-success' %>"><%= data.tags[i] %></span>
+            <% } %>
+        </div>
+        
+    </div>
+    <div style="height: 1em"></div>
+</section>
+
+<!-- 留言信息 -->
+<section class="container-section-sm">
+    <!-- 留言提交 -->
+    <div class="message-post">
+        <form method="POST" action="/message/<%=data.category %>/<%=data._id %>/post" role="form">
+            <div class="clearfix input-container">
+                <div class="input-collection">
+                    <input type="text" name="post_user" maxlength="12" placeholder="您的名字" class="message-post-input">
+                </div>
+                <div class="input-collection">
+                    <input type="email" name="user_email" placeholder="您的邮箱" class="message-post-input">
+                </div>
+                <textarea name="post_content" placeholder="您的留言"></textarea>
+                <button type="submit" class="btn btn-primary btn-sm">留下足迹</button>
+            </div>
+        </form>
+    </div>
+
+    <h4 class="text-primary text-center">留言信息</h4>
+    <!-- 留言列表 -->
+    <div class="message-list">
+        <h5 class="text-danger text-center <%=sum==0 ? '':'hidden'  %>">
+            当前空空的，没有留言，抢个沙发吧
+        </h5>
+
+    </div>
+    <!-- 分页按钮 -->
+
+    <div class="text-center <%= sum==0 ? 'hidden':''  %>">
+        <ul class="pagination pagination-sm">
+            <li>
+                <a href="javascript:;">首页</a>
+            </li>
+            <% for(let i=1;i<=sum;i++){ %>
+            <li>
+                <a href="javascript:;"><%= i %></a>
+            </li>
+            <% } %>
+            <li>
+                <a href="javascript:;">末页</a>
+            </li>
+
+        </ul>
+    </div>
+</section>
+<script src="/js/handleMsg.js"></script>
+
+<%- include footer %>

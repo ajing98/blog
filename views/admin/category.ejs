@@ -54,17 +54,9 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr>
-                    <td>默认</td>
-                    <td>这是默认的分类</td>
-                    <td>待实现</td>
-                    <td>
-                        <a href="javascript:false" data-placement="top" data-toggle="tooltip" title="这是默认的分类不可修改"
-                            class="btn btn-warning btn-xs margin-5 ">修改</a>
-                        <a href="javascript:false" data-placement="top" data-toggle="tooltip" title="不可以删除，放过我吧，我是默认的分类"
-                            class="btn btn-danger btn-xs margin-5 ">删除</a>
-                    </td>
-                </tr> -->
+                <tr class="<%=category.length!=0?'hidden':'' %>">
+                    <td>当前列表无数据，快去添加你的地一个分类吧</td>
+                </tr>
                 <% for(let i = 0;i < category.length;i++){ %>
                 <tr>
                     <td><%=category[i].category_name %></td>

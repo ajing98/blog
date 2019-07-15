@@ -32,11 +32,12 @@ module.exports = {
         ArticleModel.countDocuments(callback);
     },
     /**
-     * 查询全部文章
+     * @param {Object} --查询条件，可选
+     * 分类查询文章
      * @param {Function} callback --回调函数
      */
-    queryArticle(callback){
-        ArticleModel.find({}).sort({_id:-1}).exec(callback);
+    queryArticle(option={},callback){
+        ArticleModel.find(option).sort({_id:-1}).exec(callback);
     },
     /**
      * 查询最新的6条文章数据
@@ -79,9 +80,10 @@ module.exports = {
         }, callback)
     },
     /**
-     * 
-     * @param {Object} item         --提交留言对象
-     * @param {Function} callback   --回调函数
+     * 提交留言
+     * @param {String} id         --对应的文章id
+     * @param {Object} item       --提交留言对象
+     * @param {Function} callback --回调函数
      */
     postMessage(id, item, callback){
         ArticleModel.updateOne({
@@ -108,5 +110,13 @@ module.exports = {
                 }
             }
         }, callback);
+    },
+    /**
+     * 根据文章id获取相应的留言信息
+     * @param {String} id -文章id
+     * @param {*} callback -回调函数
+     */
+    getMessage(id,callback){
+        ArticleModel.find({_id:id},{message:1},callback);
     }
 };
